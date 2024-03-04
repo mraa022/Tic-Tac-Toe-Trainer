@@ -1,0 +1,9 @@
+.bot-form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bot-info {
+    flex: 1;
+    margin-right: 10px; /* Adjust margin between the two 'bot-info' divs */
+}
