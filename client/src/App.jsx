@@ -14,6 +14,10 @@ import {UserContextProvider} from './context/userContext'
 import {UserContext} from './context/userContext'
 import CreateBotX from './pages/Bot-Trainer/CreateBotX'
 import CreateBotO from './pages/Bot-Trainer/CreateBotO'
+import Board from './pages/Game/Board'
+import BotsList from './pages/Bot-Trainer/BotsList'
+import ChooseBotType from './pages/Bot-Trainer/ChooseBotType'
+import PlayAgainstBot from './pages/Bot-Trainer/PlayAgainstBot'
 
 axios.defaults.baseURL = 'http://localhost:8000'
 axios.defaults.withCredentials = true
@@ -35,7 +39,10 @@ function App() {
         <Route path='/logout' element={<Logout/>} />
         <Route path='/create_x_bot' element={<CreateBotX/>} />
         <Route path='/create_o_bot' element={<CreateBotO/>} />
-        
+        <Route path='/game' element={<Board/>} />
+        <Route path='/all_bots' element={<BotsList/>} />
+        <Route path='/bot_type' element={<ChooseBotType/>} />
+        <Route path='/play_bot' element={<PlayAgainstBot/>} />
       </Routes>
     </UserContextProvider>
     

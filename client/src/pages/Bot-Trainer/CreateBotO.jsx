@@ -35,10 +35,17 @@ export default function CreateBotO() {
             axios.post('http://127.0.0.1:5000',{
                 data:botsInfo
             },config).then(({data})=>{
-                console.log(data)
+                    axios.defaults.withCredentials = true
+                    axios.post('bots/create_bot',{
+                        player_o_q: data.player_o_q,
+                        player_x_q: data.player_x_q,
+                        botName:X.botName
+                    }).then(({data})=>{
+                        console.log(data)
             })
-    }
-}
+     })
+            
+}}
     return (
         <div>
             <h1>O player properties</h1>
@@ -65,7 +72,7 @@ export default function CreateBotO() {
 
                 </div>
 
-                <button type='submit'>Submit</button>
+                <button type='submit'>Train Bot</button>
             </form>
         </div>
     )

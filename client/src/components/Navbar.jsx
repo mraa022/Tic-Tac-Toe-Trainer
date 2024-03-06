@@ -11,7 +11,10 @@ export default function Navbar() {
     return (
       <nav>
           <Link to ='/'>Home</Link>
+          <Link to = '/create_x_bot'>Create Bot</Link>
+          <Link to = '/all_bots'>Bots list</Link>
           <Link to = '/logout'>Logout</Link>
+          
          
       </nav>
     )

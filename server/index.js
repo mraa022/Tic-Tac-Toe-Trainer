@@ -24,8 +24,7 @@ app.use(express.urlencoded({extended:false}))
 
 // routes
 app.use('/auth',require('./routes/authRoutes'))
-
-
+app.use('/bots',require('./routes/botRoutes'))
 
 
 
