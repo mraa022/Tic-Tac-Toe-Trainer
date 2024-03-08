@@ -17,7 +17,9 @@ import CreateBotO from './pages/Bot-Trainer/CreateBotO'
 import Board from './pages/Game/Board'
 import BotsList from './pages/Bot-Trainer/BotsList'
 import ChooseBotType from './pages/Bot-Trainer/ChooseBotType'
-import PlayAgainstBot from './pages/Bot-Trainer/PlayAgainstBot'
+import AllBotsList from './pages/Bot-Trainer/AllBotsList'
+import PickBot from './pages/Bot-Trainer/PickBot'
+import BotvBot from './pages/Bot-Trainer/BotvBot'
 
 axios.defaults.baseURL = 'http://localhost:8000'
 axios.defaults.withCredentials = true
@@ -42,7 +44,10 @@ function App() {
         <Route path='/game' element={<Board/>} />
         <Route path='/all_bots' element={<BotsList/>} />
         <Route path='/bot_type' element={<ChooseBotType/>} />
-        <Route path='/play_bot' element={<PlayAgainstBot/>} />
+        <Route path='/every_bot' element={<AllBotsList/>} />
+        <Route path='/pick_bot' element={<PickBot/>} />
+        <Route path='/bot-v-bot' element={<BotvBot/>} />
+        
       </Routes>
     </UserContextProvider>
     

@@ -1,22 +1,25 @@
 import React, { useState,useEffect } from 'react'
-import Square from './Square'
+import Square from '.././Game/Square'
 import '../../styles/board.css'
 import {useLocation} from 'react-router-dom';
 import { useNavigate } from 'react-router'
 
-export default function Board() {
+export default function BotvBot() {
     const location = useLocation();
     const navigate = useNavigate();
-    const Q_table = location.state.Q_table
+    const Q_table1 = location.state.Q_table1
+    const Q_table2 = location.state.Q_table2
     const type = location.state.type
     const [board,setBoard] = useState(["","","","","","","","",""])
     const [matrix,setMatrix] = useState([[0,0,0],[0,0,0],[0,0,0]])
-    const [botTurn,setBotTurn] = useState(false) 
     const matrixPos = {0:[0,0],1:[0,1],2:[0,2],3:[1,0],4:[1,1],5:[1,2],6:[2,0],7:[2,1],8:[2,2]}
     const botActions = {'(0, 0)':0,'(0, 1)':1,'(0, 2)':2,'(1, 0)':3,'(1, 1)':4,'(1, 2)':5,'(2, 0)':6,'(2, 1)':7,'(2, 2)':8}
     const playerNum = {'X':1,'O':-1,'':0}
-    const playerSymbol = type === 'X' ? 'O' : 'X'
-    const [clickedSquare,setClickedSquare] = useState(null);
+    const botSymbol = type
+    const otherpBotSymbol = type === 'X' ? 'O' : 'X'
+    const Q_tables = {[botSymbol]:Q_table1,[otherpBotSymbol]:Q_table2}
+    const [botTurn,setBotTurn] = useState('X') // X always goes first
+    const gameOverMsg = {[botSymbol]:"your Bot won",[otherpBotSymbol]:"Other Bot won"}
     const [gameOver,setGameOver] = useState(false)
     const hash_board = ()=>{
         let hash = 0
@@ -37,7 +40,7 @@ export default function Board() {
     }
 
 
-    const find_bot_move = ()=>{
+    const find_bot_move = (Q_table)=>{
         const s = hash_board()
         
         const possible_actions = Q_table[s]
@@ -64,20 +67,6 @@ export default function Board() {
     }
 
 
-
-    useEffect(()=>{
-        if(type==='X'){
-            
-            const action =  find_bot_move()
-            if (action != null){
-                setBoard(board.map((val,idx)=>{
-                if (idx === action && val===""){
-                    return type
-                }
-                return val
-            }))}
-        }
-    },[])
     useEffect(()=>{
         setMatrix([
             [playerNum[board[0]],playerNum[board[1]],playerNum[board[2]]],
@@ -89,15 +78,13 @@ export default function Board() {
         
     },[board])
     useEffect(()=>{
-        if(clickedSquare != null){
-        setBotTurn(!botTurn)
-    }
+
     if (matrix[0][0] === matrix[1][1] && matrix[1][1] === matrix[2][2] && matrix[0][0] !== 0){
             if (matrix[0][0]==1){
-                alert("X wins")
+                alert(gameOverMsg['X'])
             }
             else{
-                alert("O wins")
+                alert(gameOverMsg['O'])
             }
             setGameOver(true)
             navigate(0)
@@ -105,10 +92,10 @@ export default function Board() {
         // check other diagonal
         if (matrix[0][2] === matrix[1][1] && matrix[1][1] === matrix[2][0] && matrix[0][2] !== 0){
             if (matrix[0][2]==1){
-                alert("X wins")
+                alert(gameOverMsg['X'])
             }
             else{
-                alert("O wins")
+                alert(gameOverMsg['O'])
             }
             setGameOver(true)
             navigate(0)
@@ -117,10 +104,10 @@ export default function Board() {
         for (let i=0;i<3;i++){
             if (matrix[i][0] === matrix[i][1] && matrix[i][1] === matrix[i][2] && matrix[i][0] !== 0){
                 if (matrix[i][0]==1){
-                    alert("X wins")
+                    alert(gameOverMsg['X'])
                 }
                 else{
-                    alert("O wins")
+                    alert( gameOverMsg['O'])
                 }
                 setGameOver(true)
                 navigate(0)
@@ -131,10 +118,10 @@ export default function Board() {
         for (let i=0;i<3;i++){
             if (matrix[0][i] === matrix[1][i] && matrix[1][i] === matrix[2][i] && matrix[0][i] !== 0){
                 if (matrix[0][i]==1){
-                    alert("X wins")
+                    alert(gameOverMsg['X'])
                 }
                 else{
-                    alert("O wins")
+                    alert(gameOverMsg['O'])
                 }
                 setGameOver(true)
                 navigate(0)
@@ -147,70 +134,84 @@ export default function Board() {
             navigate(0)
         }
     },[matrix])
-    useEffect(()=>{
-        console.log(botTurn)
-        if (botTurn){
-            const bot_move = find_bot_move()
-            if (bot_move != null){
-                setBoard(board.map((val,idx)=>{
-                if (idx === bot_move && val===""){
-                    return type
-                }
-                return val
-            }))}
-        }
-        
-    },[botTurn])
-    const chooseSquare = (square)=>{
-            setClickedSquare(true)
+
+    const chooseSquare = (clickedByButton,square)=>{
+        if (clickedByButton){
             setBoard(board.map((val,idx)=>{
                 if (idx === square && val===""){
-                    return playerSymbol
+                    return botTurn
                 }
                 return val
             }))
+            if (botTurn === "X"){
+                setBotTurn("O")
+            }
+            else{
+                setBotTurn("X")
+            }
+        }
             
-            
-
     }
 
 
     
     return (
-    <div className='board'>
+        // div that can't be clicked by mouse but still has the property onClick
+        // this is to prevent the user from clicking on the board while the bot is playing
+        // the bot will play when the user clicks the "See Next move" button
+
+    <div>
+
+
+
+        <button onClick={()=>{
+        const bot_action = find_bot_move(Q_tables[botTurn])
+        if (bot_action != null){
+            chooseSquare(true,bot_action)
+        }
+        else{
+            alert("The bot has never seen this state before. Please train it again")
+            navigate(0)
+        }
+      }}>See Next move</button>
+
+      <div className='board'>
       <div className="row">
         <Square chooseSquare={()=>{
-            chooseSquare(0)
+            chooseSquare(false,0)
         }} val={board[0]}></Square>
         <Square chooseSquare={()=>{
-            chooseSquare(1)
+            chooseSquare(false,1)
         }} val={board[1]}></Square>
         <Square chooseSquare={()=>{
-            chooseSquare(2)
+            chooseSquare(false,2)
         }} val={board[2]}></Square>
       </div>
       <div className="row">
         <Square chooseSquare={()=>{
-            chooseSquare(3)
+            chooseSquare(false,3)
         }} val={board[3]}></Square>
         <Square chooseSquare={()=>{
-            chooseSquare(4)
+            chooseSquare(false,4)
         }} val={board[4]}></Square>
         <Square chooseSquare={()=>{
-            chooseSquare(5)
+            chooseSquare(false,5)
         }} val={board[5]}></Square>
       </div>
       <div className="row">
         <Square chooseSquare={()=>{
-            chooseSquare(6)
+            chooseSquare(false,6)
         }} val={board[6]}></Square>
         <Square chooseSquare={()=>{
-            chooseSquare(7)
+            chooseSquare(false,7)
         }} val={board[7]}></Square>
         <Square chooseSquare={()=>{
-            chooseSquare(8)
+            chooseSquare(false,8)
         }} val={board[8]}></Square>
       </div>
+      
     </div>
+    </div>
+    
   )
 }

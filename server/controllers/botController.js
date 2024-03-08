@@ -31,15 +31,30 @@ const botsList = async(req,res)=>{
     if (token){
         jwt.verify(token,process.env.JWT_SECRET,{},async(err,user)=>{
             if(err) throw err;
-            result = await Bot.find({bot_creater:user.username})
-            console.log(result)
+            result = await Bot.find({bot_creater:user.username},{botName:1,_id:1})
             res.json(result)
         })
     }
     
 }
 
+const allBots = async(req,res)=>{
+    const bots = await Bot.find({},{botName:1,_id:1,bot_creater:1})
+    res.json(bots)
+
+}
+
+const getBot = async(req,res)=>{
+    const id = req.body['id']
+    const bot = await Bot.findById(id)
+    console.log(id)
+    res.json(bot)
+    
+}
+
 module.exports = {
     createBot,
-    botsList
+    botsList,
+    getBot,
+    allBots
 }

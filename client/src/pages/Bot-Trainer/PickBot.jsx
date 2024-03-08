@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router'
 import '../../styles/bots.css'
 import { useContext } from 'react';
 import { UserContext } from '../../context/userContext'
-export default function BotsList() {
+import Cookies from 'js-cookie'
+export default function PickBot() {
     const navigate = useNavigate();
     const [bots,setBots] = useState([])
     const { user } = useContext(UserContext)
@@ -24,7 +25,8 @@ export default function BotsList() {
     const testBot = (bot)=>{
         console.log(bot)
         axios.post('bots/get_bot',{id:bot._id}).then(res=>{
-            navigate('/bot_type',{state:{bot:res.data}})
+
+            navigate('/bot_type',{state:{bot:res.data,type:'Bot-v-Bot'}})
         })
        
     }
@@ -32,13 +34,13 @@ export default function BotsList() {
   return (
     
     <div>
-        <h1>Bots list</h1>
+        <h1>My bots</h1>
         <div key='1' className='bots'>
       
             {bots.map((bot,idx)=>{
                return( <div>
                     <Bot key={idx} botName={bot.botName}></Bot>
-                    <button key={bot._id} onClick={e=>{testBot(bot)}}>Play against bot</button>
+                    <button key={bot._id} onClick={e=>{testBot(bot)}}>Pick bot</button>
                 </div>)
 
                })}  

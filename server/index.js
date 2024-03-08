@@ -3,6 +3,7 @@ const dotenv = require('dotenv').config();
 const cors = require('cors');
 const {mongoose} = require('mongoose')
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser');
 
 
 const app = express()
@@ -26,8 +27,8 @@ app.use(express.urlencoded({extended:false}))
 app.use('/auth',require('./routes/authRoutes'))
 app.use('/bots',require('./routes/botRoutes'))
 
-
-
+app.use(bodyParser.json({ limit: '995000mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '600mb' }));
 
 const port = 8000
 app.listen(port,()=>{

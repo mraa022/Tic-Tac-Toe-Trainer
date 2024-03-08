@@ -25,24 +25,23 @@ export default function CreateBotO() {
             axios.defaults.withCredentials = false
             var config = { headers: {  
                       'Content-Type': 'application/json',
-                      'Access-Control-Allow-Origin': '*'}
+                      'Access-Control-Allow-Origin': '*',
+                      'crossDomain': true,}
              }
             
            
             const O = botInfo
             const X = JSON.parse(Cookies.get('X'))
             const botsInfo = {...O,...X}
-            axios.post('http://127.0.0.1:5000',{
-                data:botsInfo
+            alert("The bot is training. This might take a while, so feel free to leave the page. You will be notified when the bot is ready")
+            
+            axios.post('http://127.0.0.1:5000/',{
+                data:botsInfo,
+                username: user.username
             },config).then(({data})=>{
-                    axios.defaults.withCredentials = true
-                    axios.post('bots/create_bot',{
-                        player_o_q: data.player_o_q,
-                        player_x_q: data.player_x_q,
-                        botName:X.botName
-                    }).then(({data})=>{
-                        console.log(data)
-            })
+                    alert("BOT TRAINED")
+                    navigate('/all_bots')
+                    navigate(0)
      })
             
 }}
