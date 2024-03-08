@@ -14,10 +14,10 @@ export default function ChooseBotType() {
       axios.post('bots/get_bot',{id:opponent_id}).then(res=>{
         const opponent = res.data
         if(type === 'X'){
-          navigate('/bot-v-bot',{state: {type: type,Q_table1:bot.player_x_q,Q_table2:opponent.player_o_q,id1:bot._id,id2:opponent._id}})
+          navigate('/bot-v-bot',{state: {type: type,Q_table1:bot.player_x_q,Q_table2:opponent.player_o_q,my_bot:{my_botName:bot.botName,my_bot_creator:bot.bot_creater,my_bot_id:bot._id,my_bot_symbol:'X'},opponent_bot:{opponent_botName:opponent.botName,opponent_bot_creator:opponent.bot_creater,opponent_bot_id:opponent._id,opponent_bot_symbol:'O'}}})
         }
         else{
-          navigate('/bot-v-bot',{state: {type: type,Q_table1:bot.player_o_q,Q_table2:opponent.player_x_q}})
+          navigate('/bot-v-bot',{state: {type: type,Q_table1:bot.player_o_q,Q_table2:opponent.player_x_q,my_bot:{my_botName:bot.botName,my_bot_creator:bot.bot_creater,my_bot_id:bot._id,symbol:'O'},opponent_bot:{opponent_botName:opponent.botName,opponent_bot_creator:opponent.bot_creater,opponent_bot_id:opponent._id,opponent_bot_symbol:'X'}}})
         }
         
       })

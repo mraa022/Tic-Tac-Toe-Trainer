@@ -6,10 +6,18 @@
     padding: 20%;
     box-shadow: 0 2% 8% rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
-    text-align: left;
+    text-align: center;
+    color:black;
     width: 20em;
+    background-image:url('https://images.emojiterra.com/google/noto-emoji/unicode-15.1/color/share/1f916.jpg');
+    background-size: cover;
+    background-position: center;
+
   }
   
   .bots .bot:hover {
     transform: scale(1.05);
   }
+
+
+  

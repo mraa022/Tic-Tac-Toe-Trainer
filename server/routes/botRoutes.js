@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
-const {createBot,botsList,getBot,allBots} = require('../controllers/botController')
+const {createBot,botsList,getBot,allBots,insertLeaderboard,botsLeaderboard} = require('../controllers/botController')
 
 // middleware
 router.use(
@@ -15,6 +15,7 @@ router.post('/create_bot',createBot)
 router.get('/bots_list',botsList)
 router.post('/get_bot',getBot)
 router.get('/all_bots',allBots)
-
+router.post('/leaderBoard',insertLeaderboard)
+router.get('/bots_leaderboard',botsLeaderboard)
 
 module.exports = router

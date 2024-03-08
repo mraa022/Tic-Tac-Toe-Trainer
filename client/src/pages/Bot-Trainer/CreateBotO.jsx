@@ -35,7 +35,7 @@ export default function CreateBotO() {
             const botsInfo = {...O,...X}
             alert("The bot is training. This might take a while, so feel free to leave the page. You will be notified when the bot is ready")
             
-            axios.post('http://127.0.0.1:5000/',{
+            axios.post('https://adnanbadri.pythonanywhere.com/',{
                 data:botsInfo,
                 username: user.username
             },config).then(({data})=>{

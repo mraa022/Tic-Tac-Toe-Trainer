@@ -43,6 +43,7 @@ export default function Board() {
         const possible_actions = Q_table[s]
         if (!possible_actions){
             alert("The bot has never seen this state before. please train it again.")
+            setGameOver(true)
             setBotTurn(!botTurn)
             navigate(0)
         }
@@ -54,6 +55,7 @@ export default function Board() {
            const actual_action = botActions[random_action];
            if (board[actual_action] !== ""){
                alert("The bot chose a square that is already taken. Please train it again")
+               setGameOver(true)
                setBotTurn(!botTurn)
                navigate(0)
            }
@@ -149,7 +151,7 @@ export default function Board() {
     },[matrix])
     useEffect(()=>{
         console.log(botTurn)
-        if (botTurn){
+        if (botTurn && !gameOver){
             const bot_move = find_bot_move()
             if (bot_move != null){
                 setBoard(board.map((val,idx)=>{

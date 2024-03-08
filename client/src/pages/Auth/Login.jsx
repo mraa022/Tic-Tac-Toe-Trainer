@@ -18,7 +18,7 @@ export default function Login() {
             const {data} = await axios.post('/auth/login',{
               username,password,
               withCredentials: true,
-        headers: { crossDomain: true, 'Content-Type': 'application/json' }
+              headers: { crossDomain: true, 'Content-Type': 'application/json'}
             })
             if (data.error){
               toast.error(data.error)

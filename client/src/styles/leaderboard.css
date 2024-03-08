@@ -1,0 +1,23 @@
+
+table {
+  border-collapse: collapse;
+  width: 50%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.5);
+  background-color: rgb(203, 112, 112);
+  color: black;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+}
+
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+ 

@@ -3,13 +3,19 @@ import Square from '.././Game/Square'
 import '../../styles/board.css'
 import {useLocation} from 'react-router-dom';
 import { useNavigate } from 'react-router'
-
+import axios from 'axios'
 export default function BotvBot() {
     const location = useLocation();
     const navigate = useNavigate();
     const Q_table1 = location.state.Q_table1
     const Q_table2 = location.state.Q_table2
     const type = location.state.type
+
+    const {my_botName,my_bot_creator,my_bot_id,my_bot_symbol} = location.state.my_bot
+    const {opponent_botName,opponent_bot_creator,opponent_bot_id,opponent_bot_symbol} = location.state.opponent_bot
+
+    
+
     const [board,setBoard] = useState(["","","","","","","","",""])
     const [matrix,setMatrix] = useState([[0,0,0],[0,0,0],[0,0,0]])
     const matrixPos = {0:[0,0],1:[0,1],2:[0,2],3:[1,0],4:[1,1],5:[1,2],6:[2,0],7:[2,1],8:[2,2]}
@@ -45,8 +51,8 @@ export default function BotvBot() {
         
         const possible_actions = Q_table[s]
         if (!possible_actions){
-            alert("The bot has never seen this state before. please train it again.")
-            setBotTurn(!botTurn)
+            alert("One of the bots never saw this state before. Thus the game was prematurely ended.")
+            setGameOver(true)
             navigate(0)
         }
         else{
@@ -56,8 +62,18 @@ export default function BotvBot() {
           // get botActions at the key random_action
            const actual_action = botActions[random_action];
            if (board[actual_action] !== ""){
-               alert("The bot chose a square that is already taken. Please train it again")
-               setBotTurn(!botTurn)
+               if(botTurn === playerNum){
+                    alert("Your Bot chose a square that is already taken. Therefore it lost. Please train it again")
+                    axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'loss',bot_type:botSymbol})
+                    axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'win',bot_type:otherpBotSymbol})
+               }
+               else{
+                    alert("The other Bot chose a square that is already taken. Therefore it lost and you won.")
+                    axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'loss',bot_type:otherpBotSymbol})
+                    axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'win',bot_type:botSymbol})
+               } 
+               
+               setGameOver(true)
                navigate(0)
            }
            else{
@@ -81,9 +97,25 @@ export default function BotvBot() {
 
     if (matrix[0][0] === matrix[1][1] && matrix[1][1] === matrix[2][2] && matrix[0][0] !== 0){
             if (matrix[0][0]==1){
+                if(playerNum[botSymbol] === 1){
+                    axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'win',bot_type:botSymbol})
+                    axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'loss',bot_type:otherpBotSymbol})
+                }
+                else{
+                    axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'loss',bot_type:botSymbol})
+                    axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'win',bot_type:otherpBotSymbol})
+                }
                 alert(gameOverMsg['X'])
             }
             else{
+                if(playerNum[botSymbol] === -1){
+                    axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'win',bot_type:botSymbol})
+                    axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'loss',bot_type:otherpBotSymbol})
+                }
+                else{
+                    axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'loss',bot_type:botSymbol})
+                    axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'win',bot_type:otherpBotSymbol})
+                }
                 alert(gameOverMsg['O'])
             }
             setGameOver(true)
@@ -92,9 +124,25 @@ export default function BotvBot() {
         // check other diagonal
         if (matrix[0][2] === matrix[1][1] && matrix[1][1] === matrix[2][0] && matrix[0][2] !== 0){
             if (matrix[0][2]==1){
+                if(playerNum[botSymbol] === 1){
+                    axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'win',bot_type:botSymbol})
+                    axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'loss',bot_type:otherpBotSymbol})
+                }
+                else{
+                    axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'loss',bot_type:botSymbol})
+                    axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'win',bot_type:otherpBotSymbol})
+                }
                 alert(gameOverMsg['X'])
             }
             else{
+                if(playerNum[botSymbol] === -1){
+                    axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'win',bot_type:botSymbol})
+                    axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'loss',bot_type:otherpBotSymbol})
+                }
+                else{
+                    axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'loss',bot_type:botSymbol})
+                    axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'win',bot_type:otherpBotSymbol})
+                }
                 alert(gameOverMsg['O'])
             }
             setGameOver(true)
@@ -104,9 +152,25 @@ export default function BotvBot() {
         for (let i=0;i<3;i++){
             if (matrix[i][0] === matrix[i][1] && matrix[i][1] === matrix[i][2] && matrix[i][0] !== 0){
                 if (matrix[i][0]==1){
+                    if(playerNum[botSymbol] === 1){
+                        axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'win',bot_type:botSymbol})
+                        axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'loss',bot_type:otherpBotSymbol})
+                    }
+                    else{
+                        axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'loss',bot_type:botSymbol})
+                        axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'win',bot_type:otherpBotSymbol})
+                    }
                     alert(gameOverMsg['X'])
                 }
                 else{
+                    if(playerNum[botSymbol] === -1){
+                        axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'win',bot_type:botSymbol})
+                        axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'loss',bot_type:otherpBotSymbol})
+                    }
+                    else{
+                        axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'loss',bot_type:botSymbol})
+                        axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'win',bot_type:otherpBotSymbol})
+                    }
                     alert( gameOverMsg['O'])
                 }
                 setGameOver(true)
@@ -116,11 +180,28 @@ export default function BotvBot() {
         }
         // check columns
         for (let i=0;i<3;i++){
+
             if (matrix[0][i] === matrix[1][i] && matrix[1][i] === matrix[2][i] && matrix[0][i] !== 0){
                 if (matrix[0][i]==1){
+                    if(playerNum[botSymbol] === 1){
+                        axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'win',bot_type:botSymbol})
+                        axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'loss',bot_type:otherpBotSymbol})
+                    }
+                    else{
+                        axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'loss',bot_type:botSymbol})
+                        axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'win',bot_type:otherpBotSymbol})
+                    }
                     alert(gameOverMsg['X'])
                 }
                 else{
+                    if(playerNum[botSymbol] === -1){
+                        axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'win',bot_type:botSymbol})
+                        axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'loss',bot_type:otherpBotSymbol})
+                    }
+                    else{
+                        axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'loss',bot_type:botSymbol})
+                        axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'win',bot_type:otherpBotSymbol})
+                    }
                     alert(gameOverMsg['O'])
                 }
                 setGameOver(true)
@@ -129,6 +210,8 @@ export default function BotvBot() {
         }
         // check draw
         if (!board.includes("")){
+            axios.post('/bots/leaderBoard',{bot_id:my_bot_id,bot_name:my_botName,bot_creator:my_bot_creator,status:'draw',bot_type:botSymbol})
+            axios.post('/bots/leaderBoard',{bot_id:opponent_bot_id,bot_name:opponent_botName,bot_creator:opponent_bot_creator,status:'draw',bot_type:otherpBotSymbol})
             alert("Draw")
             setGameOver(true)
             navigate(0)
@@ -136,7 +219,7 @@ export default function BotvBot() {
     },[matrix])
 
     const chooseSquare = (clickedByButton,square)=>{
-        if (clickedByButton){
+        if (clickedByButton && !gameOver){
             setBoard(board.map((val,idx)=>{
                 if (idx === square && val===""){
                     return botTurn
@@ -153,8 +236,6 @@ export default function BotvBot() {
             
     }
 
-
-    
     return (
         // div that can't be clicked by mouse but still has the property onClick
         // this is to prevent the user from clicking on the board while the bot is playing
@@ -165,14 +246,15 @@ export default function BotvBot() {
 
 
         <button onClick={()=>{
-        const bot_action = find_bot_move(Q_tables[botTurn])
-        if (bot_action != null){
-            chooseSquare(true,bot_action)
-        }
-        else{
-            alert("The bot has never seen this state before. Please train it again")
-            navigate(0)
-        }
+            const bot_action = find_bot_move(Q_tables[botTurn])
+            if (bot_action != null){
+                chooseSquare(true,bot_action)
+            }
+            else{
+                alert("The bot has never seen this state before. Please train it again")
+                setGameOver(true)
+                navigate(0)
+            }
       }}>See Next move</button>
 
       <div className='board'>

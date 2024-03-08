@@ -11,17 +11,24 @@ export default function AllBotsList() {
     const [bots,setBots] = useState([])
     const { user } = useContext(UserContext)
     
+ 
     useEffect(()=>{
-        
-        axios.get('bots/all_bots')
-        .then(res=>{
+        if(user){   
+            axios.get('bots/all_bots')
+            .then(res=>{
             
-            setBots(res.data)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    },[])
+                setBots(res.data.filter(bot=>bot.bot_creater !== user.username))
+                
+                
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        }
+    },[user])
+
+    
+
     const testBot = (bot)=>{
         console.log(bot)
         axios.post('bots/get_bot',{id:bot._id}).then(res=>{

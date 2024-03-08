@@ -3,10 +3,12 @@ const {Schema} = mongoose;
 
 const leaderBoardSchema = new Schema({
    botName: String,
-   numWins: Number,
+   wins: Number,
+   losses: Number,
+   draws: Number,
    botType:String,
    bot_creater:String,
    botId:String
 });
-const leaderBoardModel  = mongoose.model('Bot',leaderBoardSchema);
+const leaderBoardModel  = mongoose.model('LeaderBoard',leaderBoardSchema);
 module.exports = leaderBoardModel;

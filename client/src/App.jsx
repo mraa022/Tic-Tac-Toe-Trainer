@@ -20,6 +20,7 @@ import ChooseBotType from './pages/Bot-Trainer/ChooseBotType'
 import AllBotsList from './pages/Bot-Trainer/AllBotsList'
 import PickBot from './pages/Bot-Trainer/PickBot'
 import BotvBot from './pages/Bot-Trainer/BotvBot'
+import Leaderboard from './pages/Bot-Trainer/Leaderboard'
 
 axios.defaults.baseURL = 'http://localhost:8000'
 axios.defaults.withCredentials = true
@@ -47,6 +48,7 @@ function App() {
         <Route path='/every_bot' element={<AllBotsList/>} />
         <Route path='/pick_bot' element={<PickBot/>} />
         <Route path='/bot-v-bot' element={<BotvBot/>} />
+        <Route path='/leaderboard' element={<Leaderboard/>} />
         
       </Routes>
     </UserContextProvider>

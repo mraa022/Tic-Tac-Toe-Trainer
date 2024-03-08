@@ -14,7 +14,9 @@ export default function Navbar() {
           <Link to = '/create_x_bot'>Create Bot</Link>
           <Link to = '/all_bots'>My bots</Link>
            <Link to = '/every_bot'>All bots</Link>
+           <Link to = '/leaderboard'>Leaderboard</Link>
           <Link to = '/logout'>Logout</Link>
+          
           
          
       </nav>
