@@ -61,7 +61,7 @@ const loginUser = async(req,res)=>{
                     console.log(err);
                     // Handle the error here if needed
                   } else {
-                    res.cookie('token', token,{ httpOnly: true, domain: '.app.com' }).status(200).json({
+                    res.cookie('token', token,{ httpOnly: true, domain: 'https://tic-tac-toe-trainer-client.vercel.app/' }).status(200).json({
                       success: true,
                       user,
                     });
