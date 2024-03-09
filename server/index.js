@@ -23,6 +23,11 @@ app.use(cookieParser())
 app.use(express.urlencoded({extended:false}))
 
 
+
+// start route
+app.get('/',(req,res)=>{
+    res.send('Server is running')
+})
 // routes
 app.use('/auth',require('./routes/authRoutes'))
 app.use('/bots',require('./routes/botRoutes'))
