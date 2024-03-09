@@ -62,8 +62,7 @@ const loginUser = async(req,res)=>{
                     console.log(err);
                     // Handle the error here if needed
                   } else {
-                    Cookies.set('token',token)
-                    res.cookie('token', token,{ httpOnly: true,}).status(200).json({
+                    res.cookie('token', token,{ httpOnly: true,secure: true}).status(200).json({
                       success: true,
                       user,
                     });
