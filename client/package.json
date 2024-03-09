@@ -1,6 +1,5 @@
 {
   "name": "vite-project",
-  "homepage":"https://tic-tac-toe-trainer-client-j1qkuf4g0-mraa022s-projects.vercel.app/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
