@@ -7,7 +7,7 @@ const {registerUser,loginUser,logOut,getProfile} = require('../controllers/authC
 router.use(
     cors({
         credentials: true,
-        origin: 'https://tic-tac-toe-trainer-client.vercel.app/'
+        origin: 'https://tic-tac-toe-trainer-client.vercel.app'
     })
 )
 
