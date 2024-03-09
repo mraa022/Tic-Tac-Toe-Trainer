@@ -6,7 +6,7 @@
         "use": "@vercel/node"
       }
     ],
-    "routes": [
+    "rewrites": [
       {
        "src": "https://tic-tac-toe-trainer-client-264e3ujzr-mraa022s-projects.vercel.app/register",
        "dest": "/"
