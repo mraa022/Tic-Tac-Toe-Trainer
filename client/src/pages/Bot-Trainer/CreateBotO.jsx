@@ -33,7 +33,7 @@ export default function CreateBotO() {
             const O = botInfo
             const X = JSON.parse(Cookies.get('X'))
             const botsInfo = {...O,...X}
-            alert("The bot is training. This might take a while, so feel free to leave the page. You will be notified when the bot is ready")
+            alert("The bot is training. This might take a while, so feel free to leave the page. Check back later to see if the bot has been trained by going to the myBots page.")
             
             axios.post('https://adnanbadri.pythonanywhere.com/',{
                 data:botsInfo,
