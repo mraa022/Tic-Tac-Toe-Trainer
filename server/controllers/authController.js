@@ -63,7 +63,7 @@ const loginUser = async(req,res)=>{
                     // Handle the error here if needed
                   } else {
                     Cookies.set('token',token)
-                    res.json('Logged in').status(200).json({
+                    res.cookie('token', token,{ httpOnly: true,}).status(200).json({
                       success: true,
                       user,
                     });
@@ -98,11 +98,10 @@ const getProfile = (req,res)=>{
 }
 const logOut = (req,res)=>{
     
-    Cookies.remove('token')
-    // res.cookie('token', 'none', {
-    //     expires: new Date(Date.now() + 5 * 1000),
-    //     httpOnly: true,
-    // });
+    res.cookie('token', 'none', {
+        expires: new Date(Date.now() + 5 * 1000),
+        httpOnly: true,
+    });
 
     res.status(200).json({ success: true, message: 'User logged out successfully' })
     
