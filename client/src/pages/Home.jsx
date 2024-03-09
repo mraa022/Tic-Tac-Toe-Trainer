@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>WELCOME</h1>
+      <h1>Welcome to the Tic-Tac-Toe training website where you train Tic-Tac-Toe bots and have them play against bots trained by other users.</h1>
       
     </div>
   )
