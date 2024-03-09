@@ -22,7 +22,7 @@ import PickBot from './pages/Bot-Trainer/PickBot'
 import BotvBot from './pages/Bot-Trainer/BotvBot'
 import Leaderboard from './pages/Bot-Trainer/Leaderboard'
 
-axios.defaults.baseURL = 'https://tic-tac-toe-trainer-server.vercel.app/'
+axios.defaults.baseURL = 'https://tic-tac-toe-trainer-server-ochre.vercel.app/'
 axios.defaults.withCredentials = true
 
 function App() {
