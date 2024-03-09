@@ -26,8 +26,8 @@ export default function Login() {
             else{
               console.log("LOGED IN")
               setData({});
-              navigate('/')
-              navigate(0)
+              // navigate('/')
+              // navigate(0)
   
             }
           }

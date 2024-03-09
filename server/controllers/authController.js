@@ -2,7 +2,6 @@ const User = require('../models/user');
 
 const {hashPassword, comparePasswords} = require('../helpers/auth')
 const jwt = require('jsonwebtoken');
-import Cookies from 'js-cookie';
 const registerUser = async(req,res)=>{
     try {
         const {username,password} = req.body
@@ -66,6 +65,7 @@ const loginUser = async(req,res)=>{
                       success: true,
                       user,
                     });
+                    res.send()
                   }
                 }
               );
