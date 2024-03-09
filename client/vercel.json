@@ -8,8 +8,13 @@
     ],
     "rewrites": [
       {
+<<<<<<< HEAD:client/vercel.json
        "src": "https://tic-tac-toe-trainer-client-j1qkuf4g0-mraa022s-projects.vercel.app/register",
        "dest": "404.html"
+=======
+       "src": "/(.*)",
+       "dest": "/"
+>>>>>>> 5ed7a7c... .:client/public/vercel.json
       }
     ]
   }
