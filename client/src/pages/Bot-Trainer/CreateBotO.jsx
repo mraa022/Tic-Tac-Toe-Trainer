@@ -39,10 +39,10 @@ export default function CreateBotO() {
                 data:botsInfo,
                 username: user.username
             },config).then(({data})=>{
-                    alert("BOT TRAINED")
-                    navigate('/all_bots')
-                    navigate(0)
-     })
+                    alert("BOT TRAINED")                  
+            })
+            navigate('/')
+            navigate(0)
             
 }}
     return (

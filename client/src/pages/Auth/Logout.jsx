@@ -9,8 +9,8 @@ export default function Logout() {
     useEffect(() => {
       
       axios.post('/auth/logout').then(res => {
-        // navigate('/')
-        // navigate(0)
+        navigate('/')
+        navigate(0)
       })
       
     }, [])
