@@ -96,10 +96,11 @@ const getProfile = (req,res)=>{
     }
 }
 const logOut = (req,res)=>{
-    
     res.cookie('token', 'none', {
         expires: new Date(Date.now() + 5 * 1000),
         httpOnly: true,
+        secure: true,
+        sameSite: 'none'
     });
 
     res.status(200).json({ success: true, message: 'User logged out successfully' })

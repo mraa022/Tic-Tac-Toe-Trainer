@@ -8,9 +8,11 @@ export default function Logout() {
     const navigate = useNavigate()
     useEffect(() => {
       
-      Cookies.remove('token')
-      navigate('/')
-      navigate(0)
+      axios.post('/auth/logout').then(res => {
+        // navigate('/')
+        // navigate(0)
+      })
+      
     }, [])
     
   return (
