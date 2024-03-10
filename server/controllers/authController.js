@@ -19,6 +19,7 @@ const registerUser = async(req,res)=>{
 
         const exist = await User.findOne({username});
         if (exist){
+            console.log("USER ALRE")
             return res.json({
                 error: "username already in use"
             })
