@@ -42,7 +42,7 @@ export default function CreateBotO() {
                     alert("BOT TRAINED")                  
             })
             navigate('/')
-            navigate(0)
+            
             
 }}
     return (
