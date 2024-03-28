@@ -7,7 +7,7 @@ const {createBot,botsList,getBot,allBots,insertLeaderboard,botsLeaderboard} = re
 router.use(
     cors({
         credentials: true,
-        origin: 'https://tic-tac-toe-trainer.web.app'
+        origin: ['https://tic-tac-toe-trainer.web.app','http://localhost:5173']
     })
 )
 
